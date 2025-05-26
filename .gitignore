@@ -1,0 +1,17 @@
+# Python virtual environments
+venv/
+env/
+ENV/
+.venv/
+.pyenv/
+.virtualenv/
+*.env/
+*.venv/
+hr_diagram/
+
+# Python cache files
+app/__pycache__/
+
+# dotenv environment files
+.env
+.env.*
