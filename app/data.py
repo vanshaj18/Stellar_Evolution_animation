@@ -15,5 +15,10 @@ tracks = {
         "temp": [30000, 20000, 10000, 5000],
         "lum": [10000, 20000, 100000, 100],
         "stages": ["Main Sequence", "Giant", "Supernova", "Neutron Star"]
+    },
+    "30 M☉": {
+        "temp": [40000, 30000, 20000, 10000],
+        "lum": [50000, 100000, 500000, 1000],
+        "stages": ["Main Sequence", "Supergiant", "Supernova", "Black Hole"]
     }
 }
