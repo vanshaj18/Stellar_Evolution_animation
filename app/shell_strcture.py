@@ -1,3 +1,4 @@
+import numpy as np
 import plotly.graph_objects as go
 
 def shell_structure_figure(stage: str, step_frac: float = 0.0):
@@ -104,3 +105,61 @@ def shell_structure_figure(stage: str, step_frac: float = 0.0):
     fig.update_layout(height=400, width=400, margin=dict(t=50, b=10, l=10, r=10))
 
     return fig
+
+def sphere(radius, center=(0, 0, 0), color="lightyellow", opacity=1.0, name=""):
+    u = np.linspace(0, 2 * np.pi, 50)
+    v = np.linspace(0, np.pi, 50)
+    x = radius * np.outer(np.cos(u), np.sin(v)) + center[0]
+    y = radius * np.outer(np.sin(u), np.sin(v)) + center[1]
+    z = radius * np.outer(np.ones(np.size(u)), np.cos(v)) + center[2]
+
+    return go.Surface(
+        x=x, y=y, z=z,
+        surfacecolor=np.ones_like(x),
+        colorscale=[[0, color], [1, color]],
+        opacity=opacity,
+        showscale=False,
+        name=name
+    )
+
+
+def shell_structure_figure_3d(stage: str):
+    fig = go.Figure()
+    stage = stage.lower()
+
+    layers = []
+
+    if "main sequence" in stage:
+        layers.append(sphere(1.0, color="lightyellow", opacity=0.6, name="Star Surface"))
+        layers.append(sphere(0.4, color="orange", opacity=1.0, name="H-burning Core"))
+    elif "subgiant" in stage or "giant" in stage:
+        layers.append(sphere(1.0, color="lightyellow", opacity=0.6, name="Envelope"))
+        layers.append(sphere(0.6, color="orange", opacity=0.6, name="H Shell"))
+        layers.append(sphere(0.3, color="gray", opacity=1.0, name="Inert Core"))
+    elif "supernova" in stage:
+        layers.append(sphere(5.0, color="red", opacity=0.4, name="Expanding Envelope"))
+        layers.append(sphere(0.2, color="darkred", opacity=1.0, name="Collapsed Core"))
+    elif "white dwarf" in stage:
+        layers.append(sphere(0.1, color="lightgray", opacity=1.0, name="White Dwarf Core"))
+    elif "neutron star" in stage:
+        layers.append(sphere(0.01, color="purple", opacity=1.0, name="Neutron Star"))
+    elif "black hole" in stage:
+        layers.append(sphere(0.0001, color="black", opacity=1.0, name="Black hole"))
+    else:
+        layers.append(sphere(1.0, color="lightyellow", opacity=0.6, name="Unknown"))
+
+    for layer in layers:
+        fig.add_trace(layer)
+
+    fig.update_layout(
+        title=f"3D Shell Structure: {stage.title()}",
+        margin=dict(l=0, r=0, b=0, t=30),
+        scene=dict(
+            xaxis=dict(visible=False),
+            yaxis=dict(visible=False),
+            zaxis=dict(visible=False),
+            aspectmode='data'
+        )
+    )
+    return fig
+

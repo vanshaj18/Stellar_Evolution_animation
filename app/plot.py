@@ -22,8 +22,8 @@ def create_hr_diagram(temps, lums, temp_interp, lum_interp, stage):
         fillcolor="lightgray", opacity=0.2, layer="below", line_width=0)
 
     spectral_types = ["O", "B", "A", "F", "G", "K", "M"]
-    temps_ref = [30000, 20000, 10000, 7500, 6000, 4000, 3000]
-    lums_ref = [1e5, 1e3, 10, 1, 0.1, 0.01, 1e-4]
+    temps_ref = [50000, 20000, 10000, 7500, 6000, 4000, 3000]
+    lums_ref = [2e5, 1e3, 10, 1, 0.1, 0.01, 1e-4]
 
     fig.add_trace(go.Scatter(
         x=np.log10(temps_ref),
@@ -34,14 +34,14 @@ def create_hr_diagram(temps, lums, temp_interp, lum_interp, stage):
         name="Spectral Types"
     ))
 
-    fig.add_trace(go.Scatter(
-        x=np.log10(temps),
-        y=np.log10(lums),
-        mode='lines+markers',
-        line=dict(color='orange'),
-        marker=dict(size=6),
-        name="Evolution Track"
-    ))
+    # fig.add_trace(go.Scatter(
+    #     x=np.log10(temps),
+    #     y=np.log10(lums),
+    #     mode='lines+markers',
+    #     line=dict(color='orange'),
+    #     marker=dict(size=6),
+    #     name="Evolution Track"
+    # ))
 
     fig.add_trace(go.Scatter(
         x=[np.log10(temp_interp)],
@@ -59,7 +59,7 @@ def create_hr_diagram(temps, lums, temp_interp, lum_interp, stage):
         yaxis_title="log(Luminosity / L☉)",
         xaxis=dict(autorange='reversed'),
         yaxis=dict(range=[-2, 6]),
-        height=600
+        height=800
     )
 
     return fig

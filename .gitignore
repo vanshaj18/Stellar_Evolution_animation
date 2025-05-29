@@ -10,7 +10,7 @@ ENV/
 hr_diagram/
 
 # Python cache files
-app/__pycache__/
+app/__pycache__
 
 # dotenv environment files
 .env
